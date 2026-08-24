@@ -43,7 +43,8 @@ function ParticleField() {
     let animation = 0;
     const pointer = { x: 0, y: 0 };
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const particles = Array.from({ length: reduced ? 42 : 84 }, (_, index) => ({
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    const particles = Array.from({ length: reduced ? 28 : coarsePointer ? 44 : 84 }, (_, index) => ({
       x: Math.random(),
       y: Math.random(),
       z: 0.18 + Math.random() * 0.82,
@@ -53,7 +54,7 @@ function ParticleField() {
     }));
 
     const resize = () => {
-      const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+      const ratio = Math.min(window.devicePixelRatio || 1, coarsePointer ? 1.2 : 1.5);
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = Math.round(width * ratio);
@@ -85,17 +86,24 @@ function ParticleField() {
           : `rgba(255, 226, 214, ${alpha * 0.65})`;
         context.fill();
       }
-      animation = requestAnimationFrame(draw);
+      if (!document.hidden) animation = requestAnimationFrame(draw);
+    };
+
+    const onVisibility = () => {
+      cancelAnimationFrame(animation);
+      if (!document.hidden) animation = requestAnimationFrame(draw);
     };
 
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onPointer, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
     draw();
     return () => {
       cancelAnimationFrame(animation);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointer);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
@@ -163,6 +171,7 @@ export default function Home() {
 
   useEffect(() => {
     const root = document.documentElement;
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
@@ -170,10 +179,19 @@ export default function Home() {
     let targetProgress = 0;
     let currentProgress = 0;
     let animation = 0;
+    let animating = false;
+
+    const startAnimation = () => {
+      if (!animating) {
+        animating = true;
+        animation = requestAnimationFrame(render);
+      }
+    };
 
     const updatePointer = (event: PointerEvent) => {
       targetX = event.clientX / window.innerWidth - 0.5;
       targetY = event.clientY / window.innerHeight - 0.5;
+      startAnimation();
     };
     const updateScroll = () => {
       const hero = document.querySelector<HTMLElement>(".hero-scroll");
@@ -181,6 +199,7 @@ export default function Home() {
         const max = Math.max(hero.offsetHeight - window.innerHeight, 1);
         targetProgress = Math.max(0, Math.min(1, -hero.getBoundingClientRect().top / max));
       }
+      startAnimation();
     };
     const render = () => {
       currentX += (targetX - currentX) * 0.055;
@@ -189,6 +208,16 @@ export default function Home() {
       root.style.setProperty("--mx", currentX.toFixed(4));
       root.style.setProperty("--my", currentY.toFixed(4));
       root.style.setProperty("--hero-progress", currentProgress.toFixed(4));
+      const isSettled = Math.abs(targetX - currentX) < 0.0001
+        && Math.abs(targetY - currentY) < 0.0001
+        && Math.abs(targetProgress - currentProgress) < 0.0001;
+      if (isSettled) {
+        currentX = targetX;
+        currentY = targetY;
+        currentProgress = targetProgress;
+        animating = false;
+        return;
+      }
       animation = requestAnimationFrame(render);
     };
 
@@ -207,19 +236,26 @@ export default function Home() {
       }
     };
 
-    window.addEventListener("pointermove", updatePointer, { passive: true });
+    if (finePointer) window.addEventListener("pointermove", updatePointer, { passive: true });
     window.addEventListener("scroll", updateScroll, { passive: true });
+    window.addEventListener("resize", updateScroll, { passive: true });
     window.addEventListener("keydown", onKey);
     updateScroll();
-    render();
+    startAnimation();
     return () => {
       cancelAnimationFrame(animation);
       observer.disconnect();
-      window.removeEventListener("pointermove", updatePointer);
+      if (finePointer) window.removeEventListener("pointermove", updatePointer);
       window.removeEventListener("scroll", updateScroll);
+      window.removeEventListener("resize", updateScroll);
       window.removeEventListener("keydown", onKey);
     };
   }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle("menu-is-open", menuOpen);
+    return () => document.body.classList.remove("menu-is-open");
+  }, [menuOpen]);
 
   const openMedia = (url: string, title: string) => {
     if (isPlaceholderUrl(url)) {
@@ -272,7 +308,7 @@ export default function Home() {
           <span className="brand-name"><strong>Pooja</strong><strong>Chaudhary</strong></span>
           <span className="brand-role">Actor</span>
         </a>
-        <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Main navigation">
+        <nav id="primary-navigation" className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Main navigation">
           {navItems.map(([label, id]) => (
             <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}</a>
           ))}
@@ -283,6 +319,7 @@ export default function Home() {
           type="button"
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
           onClick={() => setMenuOpen((open) => !open)}
         ><span /><span /></button>
       </header>

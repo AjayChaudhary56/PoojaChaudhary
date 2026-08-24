@@ -2836,7 +2836,7 @@ main {
 .music-card > div > span,
 .footer-social-copy small,
 .form-heading small {
-  color: rgba(229, 210, 164, 0.58);
+  color: rgba(229, 210, 164, 0.68);
 }
 
 .reels-section {
@@ -3348,5 +3348,728 @@ main {
   .reel-progress i {
     animation: none;
     transform: scaleX(1);
+  }
+}
+
+/* =================================
+   RESPONSIVE DETAIL PASS
+   Phone, tablet, landscape and touch performance
+   ================================= */
+
+html {
+  scroll-padding-top: 92px;
+}
+
+section[id] {
+  scroll-margin-top: 92px;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+.menu-toggle {
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:first-child {
+  transform: translateY(3.5px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:last-child {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+
+@media (max-width: 1100px) {
+  body.menu-is-open {
+    overflow: hidden;
+  }
+
+  .site-header {
+    padding-inline: clamp(1rem, 3vw, 2rem);
+  }
+
+  .main-nav {
+    inset: 82px 0 0;
+    max-height: calc(100dvh - 82px);
+    padding: clamp(1.5rem, 5vw, 3rem);
+    justify-content: center;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background:
+      radial-gradient(circle at 80% 15%, rgba(109, 29, 66, 0.3), transparent 24rem),
+      rgba(7, 5, 8, 0.985);
+    backdrop-filter: blur(18px);
+  }
+
+  .main-nav a {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 216, 189, 0.1);
+  }
+
+  .menu-toggle {
+    width: 46px;
+    height: 46px;
+  }
+
+  .section {
+    padding-inline: clamp(1.25rem, 4.5vw, 3.5rem);
+  }
+
+  .film-grid.is-single .film-meta h3 {
+    font-size: clamp(4.8rem, 10vw, 7rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .journey-heading,
+  .section-header,
+  .resume-section {
+    grid-template-columns: 1fr;
+  }
+
+  .journey-heading,
+  .section-header {
+    gap: 0;
+  }
+
+  .journey-copy,
+  .section-header > p {
+    max-width: 44rem;
+    margin-top: 1.75rem;
+  }
+
+  .resume-section {
+    min-height: 0;
+    gap: 4rem;
+  }
+
+  .footer-intro h2 {
+    font-size: clamp(4rem, 12vw, 7.2rem);
+  }
+}
+
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 74px;
+  }
+
+  section[id] {
+    scroll-margin-top: 74px;
+  }
+
+  .site-header {
+    height: 70px;
+    padding-inline: 1rem;
+    background: rgba(7, 5, 8, 0.88);
+    backdrop-filter: blur(12px);
+  }
+
+  .brand-mark {
+    gap: 0.58rem;
+  }
+
+  .brand-mark::before {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .brand-name {
+    gap: 0.24rem;
+    font-size: clamp(0.8rem, 3.8vw, 0.94rem);
+  }
+
+  .main-nav {
+    inset: 70px 0 0;
+    max-height: calc(100dvh - 70px);
+    padding: 1.15rem 1.25rem max(1.5rem, env(safe-area-inset-bottom));
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  .main-nav a {
+    width: 100%;
+    min-height: 58px;
+    font-size: clamp(1.45rem, 7vw, 2rem);
+  }
+
+  .hero-scroll {
+    height: 175svh;
+  }
+
+  .hero-sticky {
+    height: 100svh;
+    min-height: 100svh;
+  }
+
+  .hero-intro {
+    top: calc(70px + 0.9rem);
+    left: 1rem;
+    right: auto;
+    width: calc(100% - 2rem);
+  }
+
+  .hero-intro .eyebrow {
+    font-size: 0.54rem;
+    letter-spacing: 0.2em;
+  }
+
+  .hero-rn-badge {
+    margin-top: 0.55rem;
+    padding: 0.38rem 0.58rem;
+    font-size: 0.46rem;
+  }
+
+  .hero-name {
+    font-size: clamp(4.05rem, 18.5vw, 6.8rem);
+    line-height: 0.75;
+    letter-spacing: -0.07em;
+  }
+
+  .name-first {
+    left: 0.75rem;
+    top: 24svh;
+  }
+
+  .name-last {
+    left: 0.75rem;
+    right: auto;
+    top: 41svh;
+  }
+
+  .hero-portrait-wrap {
+    --hero-head-clearance: 72px;
+    top: var(--hero-head-clearance);
+    width: 110vw;
+    height: calc(100svh - var(--hero-head-clearance));
+  }
+
+  .hero-portrait {
+    transform: scale(1.01);
+    transform-origin: center top;
+  }
+
+  .deep-sphere {
+    width: 116vw;
+  }
+
+  .orbit-one {
+    width: 154vw;
+  }
+
+  .hero-statement {
+    left: 1rem;
+    right: 1rem;
+    bottom: max(0.8rem, env(safe-area-inset-bottom));
+  }
+
+  .hero-statement > p {
+    max-width: 9ch;
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.55rem, 7.2vw, 2.25rem);
+    line-height: 0.86;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+  }
+
+  .hero-actions .button-gold {
+    grid-column: 1 / -1;
+  }
+
+  .button {
+    min-width: 0;
+    min-height: 46px;
+    padding-inline: 0.75rem;
+    gap: 0.55rem;
+    font-size: 0.49rem;
+    letter-spacing: 0.12em;
+    text-align: center;
+  }
+
+  .hero-journey-reveal {
+    padding-inline: 1rem;
+  }
+
+  .hero-journey-reveal strong {
+    max-width: 96vw;
+    font-size: clamp(3.1rem, 14vw, 5.8rem);
+    white-space: normal;
+  }
+
+  .section {
+    padding: clamp(5.5rem, 18vw, 7.5rem) 1rem;
+  }
+
+  .section-header,
+  .journey-heading {
+    margin-bottom: clamp(3rem, 12vw, 4.5rem);
+  }
+
+  .journey-heading h2,
+  .section-header h2,
+  .resume-copy h2 {
+    font-size: clamp(3.25rem, 15.5vw, 5.4rem);
+    line-height: 0.84;
+  }
+
+  .section-header > p,
+  .journey-copy {
+    font-size: 0.9rem;
+    line-height: 1.72;
+  }
+
+  .camera-transition {
+    min-height: 76svh;
+    padding: 6rem 1rem;
+  }
+
+  .camera-transition h2 {
+    max-width: 100%;
+    font-size: clamp(3.15rem, 15vw, 5.5rem);
+    line-height: 0.78;
+  }
+
+  .camera-transition h2 em {
+    margin-top: 1.35rem;
+    font-size: 0.22em;
+    line-height: 1.45;
+  }
+
+  .film-grid.is-single .film-card {
+    padding: 0.75rem;
+    gap: 2rem;
+  }
+
+  .film-grid.is-single .film-poster {
+    aspect-ratio: 2 / 3;
+  }
+
+  .film-grid.is-single .film-meta {
+    padding: 0 0.35rem 0.75rem;
+  }
+
+  .film-grid.is-single .film-meta h3 {
+    margin-bottom: 1.5rem;
+    font-size: clamp(4.2rem, 23vw, 6.8rem);
+  }
+
+  .film-meta dl > div,
+  .credentials-grid dl > div {
+    align-items: flex-start;
+  }
+
+  .film-meta dd,
+  .credentials-grid dd {
+    max-width: 58%;
+    overflow-wrap: anywhere;
+    text-align: right;
+  }
+
+  .music-grid {
+    gap: 3.5rem;
+  }
+
+  .music-play {
+    width: 56px;
+    height: 56px;
+  }
+
+  .music-card h3 {
+    font-size: clamp(2.25rem, 11vw, 3.7rem);
+  }
+
+  .reels-section {
+    gap: 3.5rem;
+  }
+
+  .reels-copy h2 {
+    font-size: clamp(3.45rem, 16vw, 5.7rem);
+  }
+
+  .reels-copy > p:not(.eyebrow) {
+    font-size: 0.9rem;
+  }
+
+  .reels-profile-link {
+    max-width: 100%;
+    font-size: 0.59rem;
+  }
+
+  .reels-controls {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .reels-controls button {
+    min-width: 48px;
+    height: 48px;
+  }
+
+  .reels-controls .reels-pause {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .reel-stage {
+    min-height: 0;
+    padding: 4.8rem 0.7rem 4.75rem;
+    border-radius: 18px;
+  }
+
+  .reel-phone {
+    width: min(100%, 330px);
+    padding: 7px;
+    border-radius: 26px;
+  }
+
+  .reel-phone iframe {
+    border-radius: 20px;
+  }
+
+  .reel-stage-label {
+    top: 1.15rem;
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .reel-progress {
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .reel-open-link {
+    right: 1rem;
+  }
+
+  .showreel-frame {
+    min-height: min(560px, 76svh);
+  }
+
+  .showreel-copy {
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .showreel-copy h2 {
+    margin-bottom: 2rem;
+    font-size: clamp(3.25rem, 15vw, 5.4rem);
+  }
+
+  .gallery-grid {
+    gap: 0.65rem;
+  }
+
+  .globe-shell {
+    width: min(100%, 430px);
+  }
+
+  .globe-label span {
+    color: rgba(255, 247, 241, 0.68);
+  }
+
+  .globe-label strong {
+    font-size: clamp(1rem, 5vw, 1.45rem);
+  }
+
+  .journey-world {
+    margin-top: 4.5rem;
+    gap: 4rem;
+  }
+
+  .journey-timeline > div {
+    min-height: 132px;
+  }
+
+  .journey-timeline > div > span {
+    font-size: 0.72rem;
+  }
+
+  .journey-timeline p {
+    color: rgba(255, 247, 241, 0.82);
+    font-size: 0.74rem;
+  }
+
+  .journey-timeline strong {
+    font-size: clamp(1.35rem, 7vw, 1.9rem);
+  }
+
+  .credentials-grid article {
+    padding-inline: 1.25rem;
+  }
+
+  .resume-section {
+    padding: 7rem 1rem;
+  }
+
+  .resume-button {
+    min-height: 88px;
+    padding: 1.1rem;
+    gap: 1rem;
+  }
+
+  .collaboration-section {
+    padding-block: 7rem;
+  }
+
+  .collaboration-kicker {
+    margin-bottom: 2.5rem;
+  }
+
+  .collaboration-copy {
+    margin-bottom: 3rem;
+  }
+
+  .collaboration-copy h2 {
+    font-size: clamp(3.15rem, 14.5vw, 5.2rem);
+  }
+
+  .collaboration-form {
+    padding: 1.15rem;
+  }
+
+  .form-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .form-grid input,
+  .form-grid select,
+  .form-grid textarea {
+    min-height: 54px;
+    font-size: 1rem;
+  }
+
+  .collaboration-submit {
+    min-height: 54px;
+  }
+
+  .site-footer {
+    padding: 6.5rem 1rem max(1.5rem, env(safe-area-inset-bottom));
+    gap: 3.25rem;
+  }
+
+  .footer-intro h2 {
+    font-size: clamp(3.55rem, 15.5vw, 5.7rem);
+  }
+
+  .footer-intro > p:last-child {
+    font-size: 0.86rem;
+    line-height: 1.7;
+  }
+
+  .footer-socials {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .footer-social-card {
+    min-width: 0;
+    min-height: 82px;
+    padding: 0.7rem;
+    gap: 0.65rem;
+  }
+
+  .footer-social-icon {
+    width: 39px;
+    height: 39px;
+  }
+
+  .footer-wordmark {
+    width: 100%;
+    padding-top: 2.75rem;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: clamp(3.35rem, 15vw, 5.4rem);
+    line-height: 0.76;
+    text-align: center;
+  }
+
+  .footer-bottom {
+    gap: 0.75rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 520px) {
+  .footer-socials {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-social-card {
+    min-height: 76px;
+    border-radius: 20px;
+  }
+
+  .footer-social-copy small {
+    font-size: 0.54rem;
+  }
+
+  .footer-bottom {
+    grid-template-columns: 1fr auto;
+    font-size: 0.5rem;
+  }
+
+  .footer-bottom a {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 380px) {
+  .site-header {
+    padding-inline: 0.75rem;
+  }
+
+  .brand-name {
+    font-size: 0.76rem;
+  }
+
+  .menu-toggle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .hero-name {
+    font-size: clamp(3.8rem, 18.5vw, 4.75rem);
+  }
+
+  .hero-statement {
+    left: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .button {
+    padding-inline: 0.55rem;
+    letter-spacing: 0.09em;
+  }
+
+  .reel-phone {
+    width: min(100%, 292px);
+  }
+}
+
+@media (max-width: 1100px) and (max-height: 560px) and (orientation: landscape) {
+  html {
+    scroll-padding-top: 66px;
+  }
+
+  .site-header {
+    height: 64px;
+  }
+
+  .main-nav {
+    inset: 64px 0 0;
+    max-height: calc(100dvh - 64px);
+    padding-block: 0.75rem;
+  }
+
+  .main-nav a {
+    min-height: 46px;
+    font-size: 1.35rem;
+  }
+
+  .hero-scroll {
+    height: 165svh;
+  }
+
+  .hero-sticky {
+    min-height: 100svh;
+  }
+
+  .hero-intro,
+  .scroll-cue {
+    display: none;
+  }
+
+  .hero-name {
+    font-size: clamp(3.8rem, 13.5vw, 7.4rem);
+  }
+
+  .name-first {
+    left: 1rem;
+    top: 26svh;
+  }
+
+  .name-last {
+    left: auto;
+    right: 1rem;
+    top: 58svh;
+  }
+
+  .hero-portrait-wrap {
+    --hero-head-clearance: 66px;
+    top: var(--hero-head-clearance);
+    width: 62vw;
+    height: calc(100svh - var(--hero-head-clearance));
+  }
+
+  .hero-portrait {
+    transform: scale(1);
+  }
+
+  .hero-statement {
+    left: 1rem;
+    right: auto;
+    bottom: 0.8rem;
+    width: min(44vw, 360px);
+  }
+
+  .hero-statement > p {
+    max-width: 8ch;
+    margin-bottom: 0.55rem;
+    font-size: clamp(1.25rem, 3.5vw, 1.8rem);
+  }
+
+  .hero-actions {
+    display: flex;
+  }
+
+  .hero-actions .button-quiet {
+    display: none;
+  }
+
+  .hero-actions .button-gold {
+    min-height: 42px;
+  }
+
+  .hero-journey-reveal strong {
+    font-size: clamp(3rem, 10vw, 5rem);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .ambient-vignette {
+    box-shadow: inset 0 0 18vw rgba(0, 0, 0, 0.48);
+  }
+
+  .hero-depth,
+  .hero-name span,
+  .hero-portrait-wrap,
+  .hero-statement,
+  .hero-intro,
+  .foreground-specks {
+    will-change: opacity;
+  }
+
+  .footer-social-card,
+  .reels-profile-link,
+  .button,
+  .site-header,
+  .main-nav {
+    backdrop-filter: none;
   }
 }
